@@ -1,0 +1,165 @@
+CommonJS / ESModules
+
+---------------------------------------------------
+
+- HTTP
+    - URL
+    - Método HTTP
+        - GET => Buscar um recurso do back-end
+        - POST => Criar um recurso no back-end
+        - PUT => Alterar um recurso no back-end
+        - PATCH => Alterar uma informação específica/única de um recurso no backend (Ex: o usuário alterar a senha)
+        - DELETE => Deletar um recurso no back-end
+
+GET/users => Buscar usuários
+GET/users/1 => Buscar um usuário
+POST/users => Criar um usuário
+PUT/users/1 => Alterar um usuário
+PATCH/users/1 => Alterar uma informação específica/única de um usuário
+DELETE/users/1 => Deletar um usuário
+
+---------------------------------------------------
+
+Stateful => Mantém o estado do usuário
+Stateless => Não mantém o estado do usuário
+
+---------------------------------------------------
+
+HEADERS => Cabeçalhos (Request Headers / Response Headers)
+
+HTTP STATUS CODES
+     - 1xx => Informational
+     - 2xx => Success
+     - 3xx => Redirection
+     - 4xx => Client Error
+     - 5xx => Server Error
+     ---------------------------------
+     - 200 => OK
+     - 201 => Created
+     - 204 => No Content
+     - 400 => Bad Request
+     - 401 => Unauthorized
+     - 403 => Forbidden
+     - 404 => Not Found
+     - 500 => Internal Server Error
+
+---------------------------------------------------
+
+Streams
+
+Importação de clientes via CSV (Excel)
+Em um caso de uma planilha de 1gb de tamanho
+
+Se o usuário enviar o arquivo via POST /upload
+
+Se não estiver sendo usado o conceito de Streams, vai ser necessário esperar o envio completo do arquivo,
+e o sistema vai ler o arquivo completo antes de fazer qualquer coisa
+    - Depende da velocidade do upload 
+
+- Readable Streams -> Streams de leitura, lendo aos poucos
+- Writable Strams -> Streams de escrita, enviando aos poucos
+
+
+process.stdin.pipe(process.stdout)
+
+///
+    Streams são uma forma de trabalhar com dados grandes (como arquivos, vídeos, ou dados vindos da internet) em partes, 
+    sem precisar carregar tudo na memória de uma vez.
+
+    ✅ O que são:
+    Fluxos de dados que chegam aos poucos (por pedaços/chunks).
+    Permitem ler, escrever, ou transformar dados aos poucos, economizando memória.
+    Usados para ler arquivos grandes, enviar dados pela rede, e muito mais.
+    
+    ✅ Tipos principais de Streams:
+    Readable (Leitura) → Ler dados (ex.: ler um arquivo).
+    Writable (Escrita) → Escrever dados (ex.: salvar um arquivo).
+    Duplex → Ler e escrever ao mesmo tempo (ex.: conexão TCP).
+    Transform → Modificar dados durante o fluxo (ex.: compactar um arquivo).
+    
+    ✅ Exemplo simples (ler um arquivo em partes):
+
+        const fs = require('fs');
+
+        const stream = fs.createReadStream('arquivo.txt', 'utf8');
+
+        stream.on('data', (chunk) => {
+        console.log('Recebi:', chunk);
+        });
+
+        stream.on('end', () => {
+        console.log('Fim da leitura!');
+        });
+    
+    ✅ Por que usar?
+    Para lidar com arquivos grandes sem travar o sistema.
+    Para enviar/receber dados pela internet de forma eficiente.
+///
+
+---------------------------------------------------
+
+Buffer
+
+Buffers guardam dados em formato binário.
+São úteis para manipular dados brutos, como ler ou escrever arquivos, trabalhar com redes, etc.
+Funcionam como um "array de bytes" (mas mais eficiente).
+No Node.js, você cria um Buffer com Buffer.from(), Buffer.alloc(), entre outros.
+Exemplo rápido:
+
+    const buf = Buffer.from('Hello');
+    console.log(buf); // <Buffer 48 65 6c 6c 6f>
+    console.log(buf.toString()); // "Hello"
+
+Ou seja, o Buffer guarda a palavra "Hello" em bytes, mas você pode converter para string quando quiser.
+
+---------------------------------------------------
+
+Query Parameters: (Ex: http://localhost:3333/users?userId=1&name=Diego)
+    - Utilizado para enviar informações que não são sensíveis, utilizados para filtros, paginação,
+        que modifica a resposta mas que muitas vezes não obrigatórios
+
+Route Parameters: (Ex: GET http://localhost:3333/users/1)
+    - O 1 na url serve para identificar um recurso
+    - Se for uma rota de DELETE, significa que está querendo deletar o usuário 1
+
+Request body: (Ex: POST http://localhost:3333/users)
+    - Utilizado para envio de informações de informações de um formulario geralmente,
+        passam pelo protocolo HTTPs e são mais difíceis de serem interceptados
+
+---------------------------------------------------
+
+Regex
+
+Regex (Regular Expression) é uma ferramenta para buscar, encontrar ou substituir padrões em textos.
+Com Regex, você cria padrões que servem para verificar se uma string segue um formato (ex.: e-mails, números, senhas).
+
+✅ Pra que serve?
+    Procurar por palavras específicas em um texto.
+    Validar formatos (ex.: CPF, e-mail, datas).
+    Substituir trechos de texto (ex.: trocar palavra "foo" por "bar").
+
+✅ Exemplo simples:
+
+    const texto = "Meu e-mail é exemplo@gmail.com";
+    const regex = /\S+@\S+\.\S+/; // Padrão de e-mail simples
+
+    console.log(regex.test(texto)); // true (achou um e-mail!)
+    console.log(texto.match(regex)); // ["exemplo@gmail.com"]
+
+✅ Principais símbolos que aparecem no Regex:
+    Símbolo	Significado	Exemplo
+    .	Qualquer caractere	a.c → "abc", "axc"
+    \d	Qualquer dígito (0-9)	\d\d → "12", "34"
+    \w	Letra, número ou _ (underline)	\w\w → "ab", "a1"
+    \s	Espaço em branco	\s → " "
+    *	0 ou mais repetições	a* → "", "a", "aaa"
+    +	1 ou mais repetições	a+ → "a", "aaa"
+    ?	Opcional (0 ou 1 vez)	a? → "", "a"
+    []	Conjunto de caracteres	[abc] → "a", "b"
+    ^	Início da string	^a → "abc", mas não "ba"
+    $	Final da string	a$ → "casa", mas não "abac"
+
+✅ Resumo final:
+    Regex é uma ferramenta poderosa para trabalhar com texto de forma automática e rápida, identificando padrões que você definir.
+
+---------------------------------------------------
