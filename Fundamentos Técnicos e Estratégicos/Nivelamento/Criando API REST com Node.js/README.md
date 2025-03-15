@@ -9,3 +9,5 @@ fastify
 tsx
 
 eslint
+
+knex js
