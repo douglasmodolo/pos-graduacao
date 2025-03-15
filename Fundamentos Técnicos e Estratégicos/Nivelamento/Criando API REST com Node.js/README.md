@@ -11,3 +11,5 @@ tsx
 eslint
 
 knex js
+
+migrations
