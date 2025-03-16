@@ -8,9 +8,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     app.get('/', async () => {
         const transactions = await knex('transactions').select('*')
         
-        return {
-            transactions
-        }
+        return { transactions }
     })
 
     app.get('/:id', async (request) => {
@@ -24,9 +22,13 @@ export async function transactionsRoutes(app: FastifyInstance) {
             .where('id', params.id)
             .first()
 
-        return {
-            transaction
-        }
+        return { transaction }
+    })
+
+    app.get('/summary', async () => {
+      const summary = await knex('transactions').sum('amount', { as: 'amount' }).first()
+      
+        return { summary }
     })
 
     app.post('/', async (request, reply) => {    
