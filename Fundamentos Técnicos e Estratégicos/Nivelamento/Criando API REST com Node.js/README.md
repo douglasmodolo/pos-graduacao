@@ -200,6 +200,5 @@ const user = userSchema.parse({ name: 'John', age: 25 });
 
 ---
 
-## ✅ Conclusão
+Cookies (Fastify) - Formas de manter o contexto entre requisicoes
 
-Este repositório reúne o que há de mais moderno para desenvolvimento de APIs robustas, seguras e bem estruturadas.
