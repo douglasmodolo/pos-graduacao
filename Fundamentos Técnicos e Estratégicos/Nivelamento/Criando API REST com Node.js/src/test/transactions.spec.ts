@@ -15,7 +15,7 @@ describe('Transactions', () => {
     // Alterado para it pois faz parte da instrucao
     it('should be able to create a new transaction', async () => {
         
-        const response = await request(app.server)
+        await request(app.server)
             .post('/transactions')
             .send({
                 title: 'New transaction',
