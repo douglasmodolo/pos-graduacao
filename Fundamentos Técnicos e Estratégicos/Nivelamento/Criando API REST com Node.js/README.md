@@ -207,7 +207,7 @@ Cookies (Fastify) - Formas de manter o contexto entre requisicoes
 
 tipos personalizados no typescript (declare module)
 
-testes automatizados
+testes
   Testes unitários são testes que validam o comportamento de uma única unidade de código, como uma função ou método. Eles são úteis para garantir que cada parte da aplicação esteja funcionando corretamente, sem depender de outras partes.
 
   Testes de integração são testes que validam a integração entre várias partes da aplicação, como a integração entre a camada de banco de dados e a camada de serviço. Eles são importantes para garantir que a aplicação esteja funcionando corretamente como um todo.
@@ -216,6 +216,8 @@ testes automatizados
 
   A pirâmide de testes é uma estratégia que se baseia em ter mais testes unitários e menos testes de integração e e2e, pois testes unitários são mais rápidos e fáceis de escrever e manter do que outros tipos de testes.
 
-Vitest
+  - Vitest
 
-supertest
+  - supertest
+
+  Eu JAMAIS devo criar um teste que depende de outro teste. Se um teste precisa do outro, eles deveriam ser o mesmo teste.
